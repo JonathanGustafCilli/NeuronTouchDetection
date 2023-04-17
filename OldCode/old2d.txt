@@ -1,0 +1,19 @@
+'''
+def test(arr, v):
+    rotation = np.array([[math.cos(v),-math.sin(v)],[math.sin(v),math.cos(v)]])
+    for x in arr:
+        x[1] = np.dot([rotation[0,0],rotation[0,1]], [x[1],x[2]])
+        x[2] = np.dot([rotation[1,0],rotation[1,1]], [x[1],x[2]])
+    return arr
+
+v=0
+f1 = plt.figure()
+
+for _ in range(3):
+    neuron = test(neuron, v)
+    print("Begin")
+    plt.scatter(neuron[:,1], neuron[:,2], s=neuron[:,3], c=[colors[int(v)] for v in neuron[:,0]])
+    plt.show()
+    print("Done")
+    v = math.pi/4
+'''
