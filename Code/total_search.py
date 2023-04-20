@@ -33,7 +33,7 @@ def search_synapses(neurons):
             a += 1
             if a%100==0: print(f"\rProgress: {round((a/len_axons)*100,2)}%\r", end='')
         i += 1
-        print(f"Found {len(synapses)} synapses")             
+        print(f"Number of synapses: {len(synapses)}")             
     end = time.time()
     print(f"The algorithm took: {(end-start)/60} minutes and found {len(synapses)} synapses!")
     return np.array(synapses)

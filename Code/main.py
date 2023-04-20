@@ -18,7 +18,7 @@ path = "../Neurons/Mouse/Striatum/test_neuron.swc"
 
 neuron = Neuron(path) # <- create neuron from swc file  
 
-m = 4 # <- number of neurons to place in the cube
+m = 5 # <- number of neurons to place in the cube
 rpl = rpl_builder.create_rpl(m) # <- generate random transformations for n number of neurons
 
 neurons = []
@@ -29,6 +29,6 @@ for transformation in rpl:
 
 neuron_plotter.plot(neurons, True) # <- plot the cube with the neurons inside
 
-synapses = total_search.search_synapses(neurons)
-if synapses.size>0: neuron_plotter.plot_w_synapses(neurons, synapses) # <- plot the neurons + synapses
-else: print("No synapses found!")
+#synapses = total_search.search_synapses(neurons)
+#if synapses.size>0: neuron_plotter.plot_w_synapses(neurons, synapses) # <- plot the neurons + synapses
+#else: print("No synapses found!")

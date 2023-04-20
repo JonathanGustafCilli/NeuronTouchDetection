@@ -33,8 +33,8 @@ def plot(neurons, show_figure):
         b = np.round(np.random.rand(),1)
         colors = []
         for _ in range(neuron.get_somas().shape[0]): colors.append([1,0,0,1])
-        for _ in range(neuron.get_dendrites().shape[0]): colors.append([r,g,b,0.2])
-        for _ in range(neuron.get_axons().shape[0]): colors.append([r,g,b,1])
+        for _ in range(neuron.get_dendrites().shape[0]): colors.append([r,g,b,0.7])
+        for _ in range(neuron.get_axons().shape[0]): colors.append([r*0.7,g*0.7,b*0.7,1])
         
         neurites = neuron.get_neurites() # <- get the complete matrix of the neuron O(n)
         ax.scatter(neurites[:,1], neurites[:,2], neurites[:,3], s=neurites[:,4], c=colors, marker='o') # O(n)?
