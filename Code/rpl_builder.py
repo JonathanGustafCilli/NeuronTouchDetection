@@ -3,7 +3,7 @@ import math
 import numpy as np
 
 def create_rpl(n):
-    brain_cube_length = 500
+    brain_cube_length = 200
     rpl = []
     for i in range(n):
         # Translation:
