@@ -16,7 +16,3 @@ def create_rpl(n):
         v_z = 2*math.pi*random.uniform(0, 1)
         rpl.append([i,t_x,t_y,t_z,v_x,v_y,v_z])
     return rpl
-
-#f = open("rpl.txt", "w")
-#f.write(f"{i} {t_x} {t_y} {t_z} {v_x} {v_y} {v_z}\n")
-#f.close()

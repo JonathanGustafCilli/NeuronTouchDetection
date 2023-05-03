@@ -1,34 +1,46 @@
-import numpy as np
-import neuron_plotter
-import rpl_builder
-from neuron import Neuron
-import total_search
+import time
+from basics.Neuron import Neuron
+import basics.rpl_builder as rpl_builder
+import algorithms.linearsearch.td_linear_search as td_linear_search 
+import algorithms.octree.td_octree as td_octree 
+import algorithms.snudda.td_snudda as td_snudda 
 
-# Path of the neuron: 
-path = "../Neurons/Mouse/Striatum/test_neuron.swc"
+def generate_neurons(type :str, quantity: int):
+    neuron = Neuron(type) # <- create neuron from swc file  
+    rpl = rpl_builder.create_rpl(quantity) # <- generate random transformations for n number of neurons    
+    neurons = []
+    for transformation in rpl:
+        neuron_copy = neuron.copy() # O(n)
+        neuron_copy.transform(transformation) # O(n)
+        neurons.append(neuron_copy)
+    return neurons    
 
-# Taken from NeuroMorpho.org:
-#path = "../Neurons/Mouse/Striatum/904s5c5CNG.swc"
-
-# Taken from Snudda:
-#path = "../Neurons/Mouse/Striatum/51-5-DE-cor-rep-ax.swc"
-#path = "../Neurons/Mouse/Striatum/46-3-DE-cor-rep-ax.swc"
-#path = "../Neurons/Mouse/Striatum/21-6-DE-cor-rep-ax.swc"
-#path = "../Neurons/Mouse/Striatum/WT-P270-09-15ak-cor.swc"
-
-neuron = Neuron(path) # <- create neuron from swc file  
-
-m = 5 # <- number of neurons to place in the cube
-rpl = rpl_builder.create_rpl(m) # <- generate random transformations for n number of neurons
-
-neurons = []
-for transformation in rpl:
-    neuron_copy = neuron.copy() # O(n)
-    neuron_copy.transform(transformation) # O(n)
-    neurons.append(neuron_copy)
-
-neuron_plotter.plot(neurons, True) # <- plot the cube with the neurons inside
-
-#synapses = total_search.search_synapses(neurons)
-#if synapses.size>0: neuron_plotter.plot_w_synapses(neurons, synapses) # <- plot the neurons + synapses
-#else: print("No synapses found!")
+if __name__ == '__main__':
+    # Path of the neuron: 
+    path = "../neurons/mouse/striatum/test_neuron.swc"
+    #path = "../Neurons/Mouse/Striatum/51-5-DE-cor-rep-ax.swc"
+    
+    # Number of neurons:
+    m = 10 
+    neurons = generate_neurons(path, m)
+    td_snudda.touch_detection(neurons)
+    
+    '''
+    start_timer = time.time()
+    synapses = td_octree.touch_detection(neurons, None, True)
+    end_timer = time.time()
+    minutes = (end_timer-start_timer)/60
+    print("\n--- Touch Detection with Octree ---")
+    print(f"  * took: {int(minutes)}m {int(((minutes%1)*60)*1000)/1000}s")
+    print("  * synapses counted:", len(synapses))
+    
+    if len(synapses)>0:    
+        start_timer = time.time()
+        synapses = td_linear_search.touch_detection(neurons, True)
+        end_timer = time.time()
+        minutes = (end_timer-start_timer)/60
+        print("\n--- Touch Detection with TotSearch ---")
+        print(f"  * took: {int(minutes)}m {int(((minutes%1)*60)*1000)/1000}s")
+        print("  * synapses counted:", len(synapses))
+    '''
+    

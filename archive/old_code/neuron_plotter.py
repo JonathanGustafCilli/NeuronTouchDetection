@@ -11,19 +11,26 @@ Variables used for defining TIME COMPLEXIY of the functions:
     a = number of axon segments in a neuron
     Such that: n = s+d+a
 '''
-def plot(neurons, show_figure):
-    
-    # Properties of the plot: 
-    plt.style.use('dark_background')
-    fig = plt.figure()
-    ax = fig.add_subplot(projection='3d')
-    ax.set_xlabel('X Axis')
-    ax.set_ylabel('Y Axis')
-    ax.set_zlabel('Z Axis')
-    ax.set_zlim(-400,400)
-    ax.set_xlim(-400,400)
-    ax.set_ylim(-400,400)
 
+def plot_cube(ax, x, y, z, size, color):
+    # Plot the red boundary (cube's edges):
+    x2 = x + size
+    y2 = y + size
+    z2 = z + size
+    ax.plot3D([x2,x2],[y2,y2],[z,z2],color)
+    ax.plot3D([x,x],[y2,y2],[z,z2],color)
+    ax.plot3D([x2,x2],[y,y],[z,z2],color)
+    ax.plot3D([x,x],[y,y],[z,z2],color)
+    ax.plot3D([x,x2],[y2,y2],[z2,z2],color)
+    ax.plot3D([x,x2],[y2,y2],[z,z],color)
+    ax.plot3D([x,x2],[y,y],[z2,z2],color)
+    ax.plot3D([x,x2],[y,y],[z,z],color)
+    ax.plot3D([x2,x2],[y,y2],[z2,z2],color)
+    ax.plot3D([x,x],[y,y2],[z2,z2],color)
+    ax.plot3D([x2,x2],[y,y2],[z,z],color)
+    ax.plot3D([x,x],[y,y2],[z,z],color)
+
+def plot(neurons, ax):
     # Plot all neurons:
     for neuron in neurons:
         
@@ -39,25 +46,12 @@ def plot(neurons, show_figure):
         neurites = neuron.get_neurites() # <- get the complete matrix of the neuron O(n)
         ax.scatter(neurites[:,1], neurites[:,2], neurites[:,3], s=neurites[:,4], c=colors, marker='o') # O(n)?
     
-    # Plot the red cube's edges:
-    ax.plot3D([250,250],[250,250],[-250,250],'red')
-    ax.plot3D([-250,-250],[250,250],[-250,250],'red')
-    ax.plot3D([250,250],[-250,-250],[-250,250],'red')
-    ax.plot3D([-250,-250],[-250,-250],[-250,250],'red')
-    ax.plot3D([-250,250],[250,250],[250,250],'red')
-    ax.plot3D([-250,250],[250,250],[-250,-250],'red')
-    ax.plot3D([-250,250],[-250,-250],[250,250],'red')
-    ax.plot3D([-250,250],[-250,-250],[-250,-250],'red')
-    ax.plot3D([250,250],[-250,250],[250,250],'red')
-    ax.plot3D([-250,-250],[-250,250],[250,250],'red')
-    ax.plot3D([250,250],[-250,250],[-250,-250],'red')
-    ax.plot3D([-250,-250],[-250,250],[-250,-250],'red')
+    plot_cube(ax, -250, -250, -250, 500, "red")
 
-    if show_figure: plt.show() # <- show the figure
-    else: return ax
+    
 
-def plot_w_synapses(neurons, synapses):
-    ax = plot(neurons, False)
+def plot_w_synapses(neurons, synapses, ax):
+    plot(neurons, ax)
     # Plot the synapses:
     ax.scatter(synapses[:,0], synapses[:,1], synapses[:,2], s=[30 for v in synapses[:,0]], c=["magenta" for v in synapses[:,0]], marker='o')
-    plt.show()
+    
